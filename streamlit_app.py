@@ -1,6 +1,6 @@
 import streamlit as st
 import wget
-import os.path #to get the current working directory
+import os
 
 st.title("My Streamlit App!")
 
@@ -10,7 +10,6 @@ with st.form("app_form"):
   submitted = st.form_submit_button("Submit")
   if submitted:
       st.write("You pressed submit!") # confirm that the user pressed submit
-      if os.path.exists(status_code): # check if the file exists
-          st.image(status_code, width=500) # if the file exists, show the image
-      else:
-          st.image(wget.download('https://http.cat/' + status_code), width=500) #if the file doesn't exist, download it and show the image
+      st.image(wget.download('https://http.cat/' + status_code), width=500) #download and show the image
+      if os.path.exists(status_code): # check if the file exists on memory
+          os.remove(status_code) # if the file exists, delete the same to save memory
